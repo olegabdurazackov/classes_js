@@ -1,10 +1,10 @@
 "use strict"
 class plant {
-	constructor(name,kin,summa,m2max,kmax,photo){
+	constructor(name,kin,summa,tmin,tmax,m2max,kmax,photo){
 		this.name=name
 		this.kin=kin
 		this.t={ 
-			summa,sum:0,wshod:15	
+			summa,sum:0,wshod:15,min:tmin, opt:20, max:tmax	
 		}
 		this.lande=5		
 		this.kolwo=1		
@@ -31,29 +31,93 @@ class plant {
     this.foto=foto
 	}
 }
-function add_li() {
-	document.writeln("<li><details><summary class='daun'>"+this.name+"</summary>")
-  document.writeln("<p><img id='li_foto' align='right'  width='50%' \
-    src='"+ this.photo+"' >")
-  document.writeln("семейство: "+ this.kin)
-	document.writeln("<br/>длина гряды, м: "+ this.lande)
-	document.writeln("<br/>количество растений, шт: "+ this.kolwo)
-	document.writeln("<br/>посев: "+ this.posew)
-	document.writeln("<br/>всходы: "+ this.wshod)
-	document.writeln("<br/>возраст, дней: "+ this.day)
-	document.writeln("<br/>сумма температур: "+ this.t.summa)
-	document.writeln("<br/>\t текущая: "+  this.t.sum)
-	document.writeln("<br/>\t остаток: "+ (this.t.summa-this.t.sum))
-	document.writeln("<br/>плоды, кг: "+ this.plod)
-	document.writeln("<br/>подкормки М2 (осталось), шт: "+ this.podkorm.m2+"("+(this.podkorm.m2max-this.podkorm.m2)+")")
-	document.writeln("<br/>подкормки K (осталось), шт: "+ this.podkorm.k,"("+(this.podkorm.kmax-this.podkorm.k)+")")
-	document.writeln("<br/>урожайность кг на метр: "+ this.stat_plod_meter())
-	document.writeln("<br/>урожайность кг на растение: "+ this.stat_plod_plant())
-//  document.writeln(document.getElementById("menu"))
-	document.writeln("</p></details></li>")
+
+/*****************************/
+/* создание списка растений  */
+
+var ul_grow=document.getElementById("grow")
+function add_element (parent, element, mes="",clas="",src="",ali="") {
+     var m = document.createElement(element);
+     m.textContent = mes;
+     m.setAttribute('class', clas);
+     m.setAttribute('align', ali);
+//     m.className=clas;
+     m.src = src;
+     parent.appendChild(m);
 }
-function println() {
-	console.log(this.name,"семейство:", this.kin)
+function add_li() {
+  add_element(ul_grow, "li")
+  let li_t=document.getElementsByTagName("li")  
+  let max=li_t.length-1
+//    alert(max)
+  let li=li_t[max]
+  add_element(li,"details")
+  let d_t=document.getElementsByTagName("details")
+  let md=d_t.length-1
+  let d=d_t[md]
+	let new1=this.name
+  add_element(d,"summary",new1)
+  add_element(d,"p")
+  let p_t=document.getElementsByTagName("details")
+  let mp=p_t.length-1
+  let p=p_t[md]
+	let new2=this.photo
+  add_element(p,"img","","prav",new2,"right")
+  add_element(p,"i","семейство ")
+  add_element(p,"b",this.kin)
+  add_element(p,"br")
+  add_element(p,"i","длина гряды, м:  ")
+  add_element(p,"b",this.lande)
+  add_element(p,"br")
+  add_element(p,"i","количество растений, шт: ")
+  add_element(p,"b",this.kolwo)
+  add_element(p,"br")
+  add_element(p,"i","посев: ")
+  add_element(p,"b",this.posew)
+  add_element(p,"br")
+  add_element(p,"i","всходы: ")
+  add_element(p,"b",this.wshod)
+  add_element(p,"br")
+  add_element(p,"i","возраст, дней: ")
+  add_element(p,"b",this.day)
+  add_element(p,"br")
+  add_element(p,"i","сумма температур: ")
+  add_element(p,"b",this.t.summa)
+  add_element(p,"br")
+  add_element(p,"i","текущая: ")
+  add_element(p,"b",this.t.sum)
+  add_element(p,"br")
+  add_element(p,"i","остаток: ")
+  add_element(p,"b",(this.t.summa-this.t.sum))
+  add_element(p,"br")
+  add_element(p,"i","плоды, кг: ")
+  add_element(p,"b",this.plod)
+  add_element(p,"br")
+  add_element(p,"i","подкормки М2 (осталось), шт: ")
+  add_element(p,"b",this.podkorm.m2)
+  add_element(p,"i","(")
+  add_element(p,"b",(this.podkorm.m2max-this.podkorm.m2))
+  add_element(p,"i",")")
+  add_element(p,"br")
+  add_element(p,"i","подкормки K (осталось), шт: ")
+  add_element(p,"b",this.podkorm.k)
+  add_element(p,"i","(")
+  add_element(p,"b",(this.podkorm.kmax-this.podkorm.k))
+  add_element(p,"i",")")
+  add_element(p,"br")
+  add_element(p,"i","урожайность кг на метр: ")
+  add_element(p,"b",this.stat_plod_meter())
+  add_element(p,"br")
+  add_element(p,"i","урожайность кг на растение: ")
+  add_element(p,"b",this.stat_plod_plant())
+  add_element(p,"br")
+//  add_element(p,"i","")
+//  add_element(p,"b",this.)
+//  add_element(p,"br")
+
+}
+function println() {}
+/*	console.log(this.name,"семейство:", this.kin)
 	console.log("\tдлина гряды, м:", this.lande)
 	console.log("\tколичество растений, шт:", this.kolwo)
 	console.log("\tпосев:", this.posew)
@@ -67,10 +131,12 @@ function println() {
 	console.log("\tподкормки K (осталось), шт:", this.podkorm.k,"(",this.podkorm.kmax-this.podkorm.k,")")
 	console.log("\tурожайность кг на метр:", this.stat_plod_meter())
 	console.log("\tурожайность кг на растение:", this.stat_plod_plant())
-}
+}*/
 function add_sum(t,n) {
 //	console.log(t,n,this.t.sum)
-	this.t.sum+=(t-5)*n
+    if (t<this.t.max && t>this.t.min) {
+      this.t.sum+=(t-this.t.min)*n
+ }
 	this.day+=n
 }
 function add_plod(p) {
@@ -96,237 +162,309 @@ function foto() {
   a.setAttribute("src",this.photo)
   console.log(a)
 }
- 
-function body() {
-    const start='<body>\
-        <div id="wrapper" class="wrapper">\
-          <div class="header">\
-            HEADER\
-      </div>\
-          <div class="panel">\
-            PANEL\
-    <img src="img/perec.jpg" id="foto" width=90%>\
-      </div>\
-          <div id="content" class="content scrolled">\
-            CONTENT<br><ul>'
-    document.write(start)
+const nbody=document.getElementsByTagName("body")[0]
+function set_color() {
+    nbody.style.color=btn_color.value
 }
-function end_body() {
-    const end_body='</ul></div>\
-          <div class="menu">\
-            MENU\
-        <menu id="menu" type="list" title="выбор">\
-            </menu>\
-          </div>\
-          <div class="footer">\
-            FOOTER\
-      </div>\
-        </div>\
-    </body>'
-    document.write(end_body)
-}
-
-body()
+function set_back() {
+    nbody.style.background=btn_back.value
+            }
+function set_restore() {
+    nbody.style.background="#032020"
+    nbody.style.color="white"
+            }
 
 // new klass
 //
+class tyqua extends plant {
+    constructor(name) {
+       super(name,"тыква",3000,10,35,8,8,"img/Photo0184.jpg")
+    }
+}
 class pipo extends plant {
     constructor(name) {
-        super(name,"тыквенные",1400,8,8,"img/Photo0166.jpg")
+       super(name,"кабачок",1400,10,35,8,8,"img/Photo0184.jpg")
+    }
+}
+class ogurec extends plant {
+    constructor(name) {
+        super(name,"огурец",1400,15,35,8,8,"img/photo0184.jpg")
+    }
+}
+class dynja extends plant {
+    constructor(name) {
+        super(name,"дыня",3000,15,35,8,8,"img/photo0184.jpg")
     }
 }
 class mare  extends plant {
     constructor(name) {
-        super(name,"маревые",1500,3,8,"img/Photo0168.jpg")
+        super(name,"маревые",1500,4,25,3,8,"img/Photo0168.jpg")
     }
 }
 class selder  extends plant {
     constructor(name) {
-        super(name,"сельдерейные",1500,4,8,"img/Photo0158.jpg")
+        super(name,"сельдерейные",1500,6,25,4,8,"img/Photo0158.jpg")
     }
 }
 class kapust  extends plant {
     constructor(name) {
-        super(name,"капустные",1700,4,8,"none")
+        super(name,"капустные",1700,4,25,4,8,"none")
     }
 }
 class repa  extends plant {
     constructor(name) {
-        super(name,"капустные",700,4,8,"none")
+        super(name,"капустные",1700,4,25,4,8,"none")
     }
 }
 class luk  extends plant {
     constructor(name) {
-        super(name,"луковые",1500,6,8,"none")
+        super(name,"луковые",1700,7,30,6,8,"none")
     }
 }
 class astra  extends plant {
     constructor(name) {
-        super(name,"астровые",2150,6,6,"img/Photo0182.jpg")
+        super(name,"астровые",2150,4,32,6,6,"img/Photo0182.jpg")
+    }
+}
+class kartof  extends plant {
+    constructor(name) {
+        super(name,"картофель",1650,7,30,4,8,"none")
+    }
+}
+class tomat  extends plant {
+    constructor(name) {
+        super(name,"томат_перец",2000,15,30,6,8,"none")
+    }
+}
+class fasol  extends plant {
+    constructor(name) {
+        super(name,"фасоль",2000,10,30,6,8,"none")
     }
 }
 
-
-let o5=new pipo("огурцы 5шт")
-o5.kolwo=5
-o5.lande=1
-o5.add_sum(30,30)
-o5.add_sum(25,51)
-o5.add_sum(20,3)
-o5.add_sum(25,3)
-//add_sum.call(a,25,3)
-o5.add_plod(0.7)
-o5.add_m2(3)
-o5.add_k(2)
-o5.photo="img/Photo0164.jpg"
-o5.print()
-o5.add_li()
-
-let o2=new pipo("огурцы 2шт")
-o2.posew="май, 23"
-o2.wshod="июнь, 23"
-o2.kolwo=2
-o2.lande=0.15
-o2.add_sum(25,18)
-o2.add_sum(20,3)
-o2.add_sum(25,3)
-o2.add_m2(1)
-o2.add_plod(0)
-//o2.add_m2(1)
-o2.photo="img/Photo0160.jpg"
-o2.print()
-o2.add_li()
-
-let o1=new pipo("огурец любимчик 1шт")
-o1.posew="июнь, 12"
-o1.wshod="июль, 11"
-o1.kolwo=1
-o1.lande=0.15
-o1.add_sum(18,1)
-o1.add_sum(20,3)
-o1.add_sum(25,3)
-o1.add_plod(0)
-o1.photo="img/Photo0183.jpg"
-//o1.add_m2(1)
-//o1.add_k(1)
-o1.print()
-o1.add_li()
-
-let c=new pipo("цукини свои")
-c.kolwo=7
-c.lande=3.5
-c.add_sum(25,45)
-c.add_sum(20,3)
-c.add_sum(25,3)
-c.wshod="май, 25"
-c.posew="май, 14"
-c.add_m2(4)
-c.add_k(2)
-c.add_plod(3.7)
-c.add_plod(1.8)
-c.add_plod(1.4)
+let c=new pipo("кабачок цукини свой-2")
+c.kolwo=6
+c.lande=2.5
+c.add_sum(16,0)
+c.wshod=""//"май, 25"
+c.posew=""//"май, 14"
+c.add_m2(0)
+c.add_k(0)
+c.add_plod(0)
 c.print()
 c.add_li()
 
-let ck=new pipo("цукини круглые")
-ck.kolwo=4
-ck.lande=1
-ck.add_sum(25,45)
-ck.add_sum(20,3)
-ck.add_sum(25,3)
-ck.wshod="май, 25"
-ck.posew="май, 14"
-ck.add_m2(4)
-ck.add_k(2)
-ck.add_plod(1.2)
+let ck=new pipo("кабачок цукини круглый свой-1")
+ck.kolwo=1
+ck.lande=0.5
+ck.add_sum(25,0)
+ck.wshod=""//май, 25"
+ck.posew=""//май, 14"
+ck.add_m2(0)
+ck.add_k(3)
+ck.add_plod(0)
 ck.print()
 ck.add_li()
 
-let k=new pipo("кабачки свои")
-k.kolwo=2
-k.lande=0.5
-k.add_sum(25,45)
-k.add_sum(20,3)
-k.add_sum(25,3)
-k.wshod="май, 25"
-k.posew="май, 14"
-k.add_m2(4)
-k.add_k(2)
-k.add_plod(0.7)
-k.add_plod(1.7)
+let k=new pipo("кабачок свой-2")
+k.kolwo=5
+k.lande=2.5
+k.add_sum(25,0)
+k.wshod=""//май, 25"
+k.posew=""//май, 14"
+k.add_m2(0)
+k.add_k(0)
+k.add_plod(0)
 k.print()
 k.add_li()
 
-let u=new selder("укроп грибовский")
-u.photo="img/Photo0158.jpg"
-u.kolwo=200
-u.lande=4
-u.add_sum(25,37)
-u.add_sum(20,3)
-u.add_sum(25,3)
-u.wshod="июнь, 4"
-u.posew="май, 23"
-u.add_m2(3)
-u.add_k(1)
-u.add_plod(0.92)
-u.print()
-u.add_li()
+let kart=new kartof("картофель")
+kart.kolwo=42
+kart.lande=6
+kart.add_sum(25,0)
+kart.posew="апрель, май, 16-30; t=7"//май, 6"
+kart.wshod=""//май, 14"
+kart.add_m2(0)
+kart.add_k(0)
+kart.add_plod(0.000)
+kart.print()
+kart.add_li()
 
-let sw=new mare("свекла")
-sw.kolwo=40
-sw.lande=2.5
-sw.add_sum(25,49)
-sw.add_sum(20,3)
-sw.add_sum(25,3)
-sw.wshod="май, 18"
-sw.posew="май, 9"
-sw.add_m2(2)
-sw.add_k(2)
-sw.add_plod(0.27)
-sw.print()
-sw.add_li()
 
-let sp=new mare("шпинат")
-sp.kolwo=30
-sp.lande=2.5
-sp.add_sum(25,44)
-sp.add_sum(20,3)
-sp.add_sum(25,3)
-sp.wshod="май, 23"
-sp.posew="май, 9"
-sp.add_m2(2)
-sp.add_k(2)
-sp.add_plod(2.30)
-sp.print()
-sp.add_li()
+let l=new luk("лук барботир. семена ")
+l.photo="img/Photo0181.jpg"
+l.kolwo=50
+l.lande=0.2
+l.posew="на рассаду -- март, 20; t=26"
+l.wshod="март, 26; t=26; солнце"
+l.add_sum(26,1)
+//add_sum.call(a,25,3)
+l.add_plod(0.0)
+l.add_m2(0)
+l.add_k(0)
+l.print()
+l.add_li()
 
-let m=new selder("моковь нантская")
+let m=new selder("морковь барботир.")
 m.kolwo=200
 m.lande=5
-m.add_sum(25,53)
-m.add_sum(20,3)
-m.add_sum(25,3)
-m.wshod="май, 14"
-m.posew="май, 6"
-m.add_m2(3)
-m.add_k(2)
-m.add_plod(0.200)
+m.add_sum(25,0)
+m.posew="апрель, май, 16-30; t=6"//май, 6"
+m.wshod=""//май, 14"
+m.add_m2(0)
+m.add_k(0)
+m.add_plod(0.000)
 m.print()
 m.add_li()
 
-let p=new astra("подсолнечник")
-p.wshod="июнь, 6"
-p.kolwo=1
-p.lande=0.1
-p.posew="май, 23"
-p.wshod="июнь, 6"
-p.add_sum(25,35)
-p.add_sum(20,3)
-p.add_sum(25,3)
-p.add_m2(3)
+let o=new ogurec("огурец барботир.и пророщенные семена ")
+o.photo="img/Photo0165.jpg"
+o.kolwo=80
+o.lande=0.4
+o.posew="на рассаду --  май, 1-13"
+o.wshod="-"
+o.add_sum(1,0)
+//add_sum.call(a,25,3)
+o.add_plod(0.0)
+o.add_m2(0)
+o.add_k(0)
+o.print()
+o.add_li()
+
+let po=new astra("подсолнечник масличный озимый")
+po.kolwo=60
+po.lande=3
+po.posew="сентябрь, 29; t=8"
+po.wshod=""
+po.add_sum(0,0)
+po.add_m2(0)
+po.add_k(0)
+po.add_plod(0)
+po.print()
+po.add_li()
+
+let p=new astra("подсолнечник свой-1 барботир.,пророщ.")
+p.kolwo=60
+p.lande=6
+p.posew="апрель, май, 1-13; t=4"// май 23
+p.wshod="" // июнь, 6"
+p.add_sum(0,0)
+p.add_m2(0)
 p.add_k(0)
 p.add_plod(0)
 p.print()
 p.add_li()
 
-end_body()
+let sw=new mare("свекла барботир.")
+sw.photo="img/Photo0175.jpg"
+sw.kolwo=40
+sw.lande=2.5
+sw.add_sum(25,0)
+sw.posew="апрель, май, 16-30; t=4"//май, 9"
+sw.wshod=""//май, 18"
+sw.add_m2(0)
+sw.add_k(0)
+sw.add_plod(0.00)
+sw.print()
+sw.add_li()
+
+let t=new tomat("томат барботир. семена ")
+t.photo="img/Photo0181.jpg"
+t.kolwo=80
+t.lande=0.4
+t.posew="на рассаду -- апрель, 2-14"
+t.wshod="-"
+t.add_sum(1,0)
+//add_sum.call(a,25,3)
+t.add_plod(0.0)
+t.add_m2(0)
+t.add_k(0)
+t.print()
+t.add_li()
+
+let uo=new selder("укроп грибовский свой-1 озимый")
+uo.photo="img/Photo0186.jpg"
+uo.kolwo=300
+uo.lande=3
+uo.add_sum(0,0)
+uo.wshod="" //июнь, 4"
+uo.posew="сентябрь, 29; t=8" //"май, 23"
+uo.add_m2(0)
+uo.add_k(0)
+uo.add_plod(0)
+uo.print()
+uo.add_li()
+
+let u=new selder("укроп грибовский свой-1 барботир.")
+u.photo="img/Photo0186.jpg"
+u.kolwo=600
+u.lande=6
+u.add_sum(0,0)
+u.posew="май 1-14; t=6" //"май, 23"
+u.wshod="" //июнь, 4"
+u.add_m2(0)
+u.add_k(0)
+u.add_plod(0)
+u.print()
+u.add_li()
+
+let fas=new selder("фасоль сухие семена")
+fas.photo="img/Photo0186.jpg"
+fas.kolwo=600
+fas.lande=6
+fas.add_sum(0,0)
+fas.posew="май, 16-30; t=10" 
+fas.wshod="" 
+fas.add_m2(0)
+fas.add_k(0)
+fas.add_plod(0)
+fas.print()
+fas.add_li()
+
+let sp=new mare("шпинат барботир.")
+sp.kolwo=30
+sp.lande=2.5
+sp.add_sum(20,0)
+sp.posew="апрель, май, 16-30; t=6"//май, 9"
+sp.wshod=""//май, 23"
+sp.add_m2(0)
+sp.add_k(0)
+sp.add_plod(0.00)
+sp.print()
+sp.add_li()
+
+let lo=new luk("чеснок озимый ")
+lo.photo="img/Photo0181.jpg"
+lo.kolwo=150
+lo.lande=5
+lo.posew="сентябрь, 29; t=8"
+lo.wshod="-"
+lo.add_sum(1,0)
+//add_sum.call(a,25,3)
+lo.add_plod(0.0)
+lo.add_m2(0)
+lo.add_k(0)
+lo.print()
+lo.add_li()
+
+
+/*
+let rp=new  repa("репа португальская")
+rp.photo="img/Photo0187.jpg"
+rp.kolwo=100
+rp.lande=1
+rp.posew="июль, 14"
+rp.wshod="июль, 26"
+rp.add_sum(20,9)
+rp.add_sum(25,4)
+rp.add_sum(30,9)
+rp.add_sum(32,5)
+rp.add_sum(15,7)
+rp.add_sum(12,16)
+rp.add_m2(3)
+rp.add_k(1)
+rp.add_plod(0)
+rp.print()
+rp.add_li()
+
+*/
